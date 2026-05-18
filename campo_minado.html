@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campo Minado💣</title>
+</head>
+<body>
+    <h1>Campo Minado💣</h1>
+    <div id="game-container">
+
+    </div>
+    <script>
+        const gameContainer = document.getElementById("game-container")
+        const rows = 10;
+        const cols = 10;
+        const bombCound = 14
+
+        function createBoard(){
+            const cells = []
+            for(let i=0; i<row*cols;i++){
+                const cell = document.createElement("div")
+                cell.classList.add("cell")
+                cell.dataset.id = i
+            
+            gameContainer.appendChild(cell)
+            cells.push(cell)
+        }
+           
+            let  bombsPlaced = 0
+            while(bombsPlaced<bombCount){
+                const randomIndex = Math.floor(Math.random()*cells.length)
+                if(!cells[randomIndex].classList.contains("bomb")){
+                    cells[randomIndex].classList.add("bomb")
+                    bombsPlaced++
+                } 
+            } 
+
+            return cells;
+        }
+        function handCellClick(event){
+            const cell = event.target
+            if(cell.classList.contains("revealed")) return
+
+            cell.classList.add("revealed")
+
+            if(cell.classlist.contains("bomb")){
+                cell.innerHTTML = "💣"
+                revealAllBombs()
+                alert("Game Over!")
+            } else {
+                const adjacentBombs = getadjacentBombs(cell.dataset.id)
+                cell.innerHTML = adjacentBombs || ""
+            }
+            }
+            function revealAllBombs(){
+                cells.foreach((cell)=>{
+                    if(cell.classList.contains("bomb")){
+                        cell.innerHTML = "💣"
+                    }
+                })
+            }
+            // fUNÇÃO PARA CALCULAR O NUMERO DE BOMBAS ADJACENTES
+            function getadjacentBombs(index){
+              const row = Math.florr(index / cols);//calcula a linha da celula
+              const col = index % cols; // calcula a coluna da celula
+              let count = 0; // Inicializa o contador de bombas adjacentes
+
+              //Percorre as celulas ao redor (3x3_
+              for(let r = row - 1; r <= row +1; r++){
+                for(let c = col -1;c<= +1; c++){
+                    //VERIFICA SE A CELULA ESTA DENTRO DOS LIMITES DO TABULEIRO
+                    if(r >= 0 && r < rouws && c >= 0 && c < cols) {
+                        const neighborIndex = r * cols + c; //calcula o indice da celula vizinha
+                        if (cells[neighborIndex].classList.contains("bomb")){
+                        }
+                        count++; //Incrementa o contador se a celila vizinha for uma bomba      
+                    }    
+                }
+              }
+            }
+
+            const cells = createBoard()
+            cells.forEach((cell)=>cell.addEventListener("click",handCellClick))
+    </script>
+</body>
+</html>
