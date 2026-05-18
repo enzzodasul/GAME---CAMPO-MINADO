@@ -118,6 +118,7 @@
             function revealAllBombs(){
                 cells.forEach((cell)=>{
                     if(cell.classList.contains("bomb")){
+                        cell.classList.add("revealed")
                         cell.innerHTML = "💣"
                     }
                 })
